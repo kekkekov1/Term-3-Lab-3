@@ -4,6 +4,8 @@
 
 namespace matrix
 {
+	class Matrix;
+
 	class Size
 	{
 	public:
@@ -18,6 +20,8 @@ namespace matrix
 		{
 			return width_;
 		}
+
+		friend std::ostream& operator<<(const std::ostream&, const Size&);
 	private:
 		unsigned int height_;
 		unsigned int width_;
@@ -44,7 +48,7 @@ namespace matrix
 
 
 		//Initialize matrix with zeros and ones
-		Matrix& operator= (int);
+		Matrix& operator= (unsigned int);
 		//Get string from the index
 		std::string operator[] (unsigned int) const;
 		//Initialize matrix with matrix
@@ -92,15 +96,15 @@ namespace matrix
 
 
 		//Transpose of a matrix (it's transposition)
-		[[ nodiscard ]] Matrix& transpose();
+		[[ nodiscard ]] unsigned int height() const;
+		[[ nodiscard ]] unsigned int width() const;
+		Matrix& transpose();
 	private:
 		unsigned int height_;
 		unsigned int width_;
 		int** representation_;
 		inline static Matrix* temp_ = nullptr;
 		
-		[[ nodiscard ]] unsigned int height() const;
-		[[ nodiscard ]] unsigned int width() const;
 		[[ nodiscard ]] unsigned int area() const;
 		[[ nodiscard ]] int sum() const;
 		[[ nodiscard ]] double average() const;
@@ -132,4 +136,5 @@ namespace matrix
 	bool operator== (const Matrix&, double);
 	//Output
 	std::ostream& operator<<(const std::ostream&, const Matrix&);
+	std::ostream& operator<<(const std::ostream&, const Size&);
 }

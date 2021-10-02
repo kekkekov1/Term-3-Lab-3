@@ -2,10 +2,82 @@
 #include <cmath>
 #include <string>
 
-#pragma region members
+#pragma region namespace matrix:: functions
+
+// Reverse all values and assign
+matrix::Matrix& matrix::operator-- (Matrix& matrix)
+{
+	if (matrix.representation_)
+		for (auto i = 0u; i < matrix.height_; i++)
+			for (auto j = 0u; j < matrix.width_; j++)
+				matrix.representation_[i][j] *= -1;
+	return matrix;
+}
+// Assign and reverse all values
+matrix::Matrix& matrix::operator-- (Matrix& matrix, int)
+{
+	Matrix::push_temp(matrix);
+	--matrix;
+	return *Matrix::temp_;
+}
+// Smart pow
+matrix::Matrix& matrix::operator+ (Matrix& matrix, const double value)
+{
+	matrix.pow_for_each(value);
+	return matrix;
+}
+// Smart root
+matrix::Matrix& matrix::operator- (Matrix& matrix, const double value)
+{
+	matrix.pow_for_each(1.0 / value);
+	return matrix;
+}
+//Sum comparison
+bool matrix::operator> (const Matrix& matrix, const int value)
+{
+	return matrix.sum() > value;
+}
+bool matrix::operator< (const Matrix& matrix, const int value)
+{
+	return matrix.sum() < value;
+}
+bool matrix::operator== (const Matrix& matrix, const int value)
+{
+	return matrix.sum() == value;
+}
+//Average comparison
+bool matrix::operator> (const Matrix& matrix, const double value)
+{
+	return matrix.average() > value;
+}
+bool matrix::operator< (const Matrix& matrix, const double value)
+{
+	return matrix.average() < value;
+}
+bool matrix::operator== (const Matrix& matrix, const double value)
+{
+	return !(matrix.average() > value || matrix.average() < value);
+}
+//Output
+std::ostream& matrix::operator<<(const std::ostream&, const Matrix& matrix)
+{
+	using std::cout;
+	if (!matrix.area()) return cout << "Matrix is empty.\n";
+	for (auto i = 0u; i < matrix.height_; i++)
+		cout << "| " << matrix[i] << " |\n";
+	return cout;
+}
+std::ostream& matrix::operator<<(const std::ostream&, const Size& size)
+{
+	return std::cout << "Height: " << size.height_ << "\tWidth: " << size.width_;
+}
+
+#pragma endregion
+
+#pragma region class matrix::Matrix:: functions (public)
 
 //Initialize matrix with zeros and ones
-matrix::Matrix& matrix::Matrix::operator= (const int size)
+matrix::Matrix& matrix::Matrix::operator= (const unsigned int size)
 {
 	delete_representation();
 	representation_ = new int* [height_ = size];
@@ -92,7 +164,15 @@ bool matrix::Matrix::operator== (const Matrix& matrix) const
 }
 
 //Transpose of a matrix (it's transposition)
-[[ nodiscard ]] matrix::Matrix& matrix::Matrix::transpose()
+[[ nodiscard ]] unsigned int matrix::Matrix::height() const
+{
+	return height_;
+}
+[[ nodiscard ]] unsigned int matrix::Matrix::width() const
+{
+	return width_;
+}
+matrix::Matrix& matrix::Matrix::transpose()
 {
 	push_temp(*this);
 	delete_representation();
@@ -110,75 +190,7 @@ bool matrix::Matrix::operator== (const Matrix& matrix) const
 
 #pragma endregion
 
-#pragma region friends
-
-// Reverse all values and assign
-matrix::Matrix& matrix::operator-- (Matrix& matrix)
-{
-	if (matrix.representation_)
-		for (auto i = 0u; i < matrix.height_; i++)
-			for (auto j = 0u; j < matrix.width_; j++)
-				matrix.representation_[i][j] *= -1;
-	return matrix;
-}
-// Assign and reverse all values
-matrix::Matrix& matrix::operator-- (Matrix& matrix, int)
-{
-	Matrix::push_temp(matrix);
-	--matrix;
-	return *Matrix::temp_;
-}
-// Smart pow
-matrix::Matrix& matrix::operator+ (Matrix& matrix, const double value)
-{
-	matrix.pow_for_each(value);
-	return matrix;
-}
-// Smart root
-matrix::Matrix& matrix::operator- (Matrix& matrix, const double value)
-{
-	matrix.pow_for_each(1.0 / value);
-	return matrix;
-}
-//Sum comparison
-bool matrix::operator> (const Matrix& matrix, const int value)
-{
-	return matrix.sum() > value;
-}
-bool matrix::operator< (const Matrix& matrix, const int value)
-{
-	return matrix.sum() < value;
-}
-bool matrix::operator== (const Matrix& matrix, const int value)
-{
-	return matrix.sum() == value;
-}
-//Average comparison
-bool matrix::operator> (const Matrix& matrix, const double value)
-{
-	return matrix.average() > value;
-}
-bool matrix::operator< (const Matrix& matrix, const double value)
-{
-	return matrix.average() < value;
-}
-bool matrix::operator== (const Matrix& matrix, const double value)
-{
-	return !(matrix.average() > value || matrix.average() < value);
-}
-//Output
-std::ostream& matrix::operator<<(const std::ostream&, const Matrix& matrix)
-{
-	using std::cout;
-	if (!matrix.area()) return cout << "Matrix is empty.\n";
-	for (auto i = 0u; i < matrix.height_; i++)
-		cout << "| " << matrix[i] << " |\n";
-	return cout;
-}
-
-#pragma endregion
-
-#pragma region conversion
+#pragma region class matrix::Matrix:: conversions (public)
 
 matrix::Matrix::operator bool() const
 {
@@ -203,16 +215,8 @@ matrix::Matrix::operator matrix::Size () const
 
 #pragma endregion
 
-#pragma region private
+#pragma region class matrix::Matrix:: functions (private)
 
-[[ nodiscard ]] unsigned int matrix::Matrix::height() const
-{
-	return height_;
-}
-[[ nodiscard ]] unsigned int matrix::Matrix::width() const
-{
-	return width_;
-}
 [[ nodiscard ]] unsigned int matrix::Matrix::area() const
 {
 	return height_ * width_;
@@ -245,10 +249,12 @@ void matrix::Matrix::copy_representation(int** int_array)
 void matrix::Matrix::delete_representation()
 {
 	if (representation_)
+	{
 		for (auto i = 0u; i < height_; i++)
 			delete[] representation_[i];
-	delete[] representation_;
-	representation_ = nullptr;
+		delete[] representation_;
+		representation_ = nullptr;
+	}
 }
 void matrix::Matrix::copy_fields(const Matrix& matrix)
 {
