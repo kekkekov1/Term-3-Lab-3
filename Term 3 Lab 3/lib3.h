@@ -58,18 +58,19 @@ namespace lib3
 	void get_string(std::string* string);
 
 	unsigned int choose_index();
-	unsigned int choose_uint();
+	unsigned int get_uint();
+	int get_int();
 
 	auto case1(Arguments* args);
-	auto case2(Arguments* args);
+	auto case2(const Arguments* args);
 	auto case3(Arguments* args);
 	auto case4(const Arguments* args);
 	auto case5(Arguments* args);
-	auto case6(Arguments* args);
-	auto case7(Arguments* args);
-	auto case8(Arguments* args);
-	auto case9(Arguments* args);
-	auto case10(Arguments* args);
+	auto case6(const Arguments* args);
+	auto case7(const Arguments* args);
+	auto case8(const Arguments* args);
+	auto case9(const Arguments* args);
+	auto case10(const Arguments* args);
 	auto case11(Arguments* args);
 	auto case12(const Arguments* args);
 

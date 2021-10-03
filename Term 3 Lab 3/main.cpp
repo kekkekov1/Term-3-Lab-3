@@ -1,26 +1,5 @@
 #include "lib3.h"
 
-/*
-void converter(lib3::Arguments& args)
-{
-	using std::cout;
-	using namespace lib3;
-	if (const size_t pos = args.expression.find(')') + 1)
-		if (const int ind = index(args.expression[pos - 2]); ind >= 0 && ind < kArraySize)
-		{
-			const auto temp = matrix::Matrix(args.m_arr[ind]);
-
-			if (args.type[0] == kBool) cout << static_cast<bool>(temp);
-			else if (args.type[0] == kUint) cout << static_cast<unsigned int>(temp);
-			else if (args.type[0] == kInt) cout << static_cast<int>(temp);
-			else if (args.type[0] == kDouble) cout << static_cast<double>(temp);
-			else if (args.type[0] == kSize) cout << static_cast<matrix::Size>(temp);
-			return;
-		}
-	cout << "An error occurred\n";
-}
-*/
-
 int main()  // NOLINT(bugprone-exception-escape)
 {
 	using namespace lib3;
