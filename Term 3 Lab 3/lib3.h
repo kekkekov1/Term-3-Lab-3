@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <string>
-
 #include "matrix.h"
 
 template <typename T>
@@ -64,6 +63,7 @@ namespace lib3
 	
 	auto case7_1(Arguments*, unsigned int, int);
 	auto case7_2(const Arguments*, unsigned int, int);
+
 	auto case8_1(const Arguments*, unsigned int, int);
 	auto case8_2(const Arguments*, unsigned int, int);
 	auto case8_3(const Arguments*, unsigned int, int);
@@ -75,6 +75,7 @@ namespace lib3
 	auto case5(Arguments* args);
 	auto case6(Arguments* args);
 	auto case7(Arguments* args);
+
 	auto case8(const Arguments* args);
 	auto case9(const Arguments* args);
 	auto case10(const Arguments* args);

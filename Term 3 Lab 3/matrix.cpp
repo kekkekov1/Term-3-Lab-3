@@ -268,7 +268,12 @@ void matrix::Matrix::pow_for_each(const double value) const
 	if (representation_)
 		for (auto i = 0u; i < height_; i++)
 			for (auto j = 0u; j < width_; j++)
+			{
+				const bool negative = representation_[i][j] < 0;
+				representation_[i][j] = abs(representation_[i][j]);
 				representation_[i][j] = static_cast<int>(pow(static_cast<double>(representation_[i][j]), value));
+				if (negative) representation_[i][j] *= -1;
+			}
 }
 
 void matrix::Matrix::push_temp(const Matrix& matrix)
