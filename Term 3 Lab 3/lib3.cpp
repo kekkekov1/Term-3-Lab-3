@@ -37,22 +37,23 @@ unsigned int lib3::get_uint()
 	return get_value(0u, UINT_MAX);
 }
 
-auto lib3::case8_1(Arguments* const args, const unsigned int index, const int operation)
+auto lib3::case7_1(Arguments* const args, const unsigned int index, const int operation)
 {
 	auto result = args->m_arr[index];
 	if (operation == 1) result = result + get_double();
 	else result = result - get_double();
 	if (args->assign) args->m_arr[args->index](result);
+	std::cout << "Result is: " << result;
 }
-auto lib3::case8_2(const Arguments* const args, const unsigned int index, const int operation)
+auto lib3::case7_2(const Arguments* const args, const unsigned int index, const int operation)
 {
 	std::cout << "Choose the second matrix: ";
 	const auto index2 = choose_index();
 	if (operation == 1) std::cout << "Result is: " << args->m_arr[index] + args->m_arr[index2];
-	else std::cout << "Result is: " << args->m_arr[index] - args->m_arr[index2];
+	else std::cout << "Result is: " << args->m_arr[index] - args->m_arr[index2] << "\n";
 }
 
-auto lib3::case9_1(const Arguments* const args, const unsigned int index, const int operation)
+auto lib3::case8_1(const Arguments* const args, const unsigned int index, const int operation)
 {
 	switch (operation)
 	{
@@ -64,7 +65,7 @@ auto lib3::case9_1(const Arguments* const args, const unsigned int index, const 
 		return args->m_arr[index] == get_int();
 	}
 }
-auto lib3::case9_2(const Arguments* const args, const unsigned int index, const int operation)
+auto lib3::case8_2(const Arguments* const args, const unsigned int index, const int operation)
 {
 	switch (operation)
 	{
@@ -77,7 +78,7 @@ auto lib3::case9_2(const Arguments* const args, const unsigned int index, const 
 	}
 
 }
-auto lib3::case9_3(const Arguments* const args, const unsigned int index, const int operation)
+auto lib3::case8_3(const Arguments* const args, const unsigned int index, const int operation)
 {
 	std::cout << "Choose the second matrix: ";
 	const auto index2 = choose_index();
@@ -175,8 +176,8 @@ auto lib3::case7(Arguments* const args)
 
 	cout << (type == 2 ? "Choose the first matrix: " : "Choose the matrix: ");
 	const auto index1 = choose_index();
-	if (type == 1) case8_1(args, index1, operation);
-	else case8_2(args, index1, operation);
+	if (type == 1) case7_1(args, index1, operation);
+	else case7_2(args, index1, operation);
 }
 auto lib3::case8(const Arguments* const args)
 {
@@ -194,13 +195,14 @@ auto lib3::case8(const Arguments* const args)
 		<< "Operation: ";
 	const auto operation = get_value(1, 3, true);
 
-	cout << (type == 3 ? "Choose the first matrix:\n" : "Choose the matrix: ");
+	cout << (type == 3 ? "Choose the first matrix: " : "Choose the matrix: ");
 	const auto index1 = choose_index();
 
 	using Options = bool(*[])(const Arguments*, unsigned int, int);
-	constexpr Options option = { &case9_1, &case9_2, &case9_3 };
-	
-	std::cout << "Result is: " << option[type - 1](args, index1, operation);
+	constexpr Options option = { &case8_1, &case8_2, &case8_3 };
+
+	const auto result = option[type - 1](args, index1, operation);
+	std::cout << "Result is: " << result << "\n";
 }
 auto lib3::case9(const Arguments* const args)
 {
@@ -238,7 +240,8 @@ auto lib3::case10(const Arguments* const args)
 	cout << "Choose the matrix: ";
 	const auto index = choose_index();
 	cout << "Enter the uint value: ";
-	cout << "Result is: " << args->m_arr[index][get_value(1u, args->m_arr[index].height(), true) - 1] << "\n";
+	const auto uint = get_value(1u, args->m_arr[index].height(), true) - 1;
+	cout << "Result is: " << args->m_arr[index][uint] << "\n";
 }
 auto lib3::case11(const Arguments* const args)
 {
@@ -276,7 +279,7 @@ void lib3::main_menu(Arguments* args)
 		constexpr Options options = { &case1, &case2, &case3, &case4, &case5, &case6, &case7 };
 		constexpr ConstOptions const_options = { &case8, &case9, &case10, &case11 };
 
-		const auto action = get_value(1, 13, true) - 1;
+		const auto action = get_value(1, 12, true) - 1;
 
 		if (action == 11) return;
 		if (action < 7) options[action](args);

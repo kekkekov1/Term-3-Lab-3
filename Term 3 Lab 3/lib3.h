@@ -62,11 +62,11 @@ namespace lib3
 	double get_double();
 	unsigned int get_uint();
 	
-	auto case8_1(Arguments*, unsigned int, int);
+	auto case7_1(Arguments*, unsigned int, int);
+	auto case7_2(const Arguments*, unsigned int, int);
+	auto case8_1(const Arguments*, unsigned int, int);
 	auto case8_2(const Arguments*, unsigned int, int);
-	auto case9_1(const Arguments*, unsigned int, int);
-	auto case9_2(const Arguments*, unsigned int, int);
-	auto case9_3(const Arguments*, unsigned int, int);
+	auto case8_3(const Arguments*, unsigned int, int);
 
 	auto case1(Arguments* args);
 	auto case2(Arguments* args);
