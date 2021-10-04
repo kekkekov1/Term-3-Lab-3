@@ -46,7 +46,7 @@ auto lib3::case8_1(Arguments* const args, const unsigned int index, const int op
 }
 auto lib3::case8_2(const Arguments* const args, const unsigned int index, const int operation)
 {
-	std::cout << "Choose the second matrix:\n";
+	std::cout << "Choose the second matrix: ";
 	const auto index2 = choose_index();
 	if (operation == 1) std::cout << "Result is: " << args->m_arr[index] + args->m_arr[index2];
 	else std::cout << "Result is: " << args->m_arr[index] - args->m_arr[index2];
@@ -79,7 +79,7 @@ auto lib3::case9_2(const Arguments* const args, const unsigned int index, const 
 }
 auto lib3::case9_3(const Arguments* const args, const unsigned int index, const int operation)
 {
-	std::cout << "Choose the second matrix:\n";
+	std::cout << "Choose the second matrix: ";
 	const auto index2 = choose_index();
 	switch (operation)
 	{
@@ -111,6 +111,7 @@ auto lib3::case3(Arguments* const args)
 }
 auto lib3::case4(Arguments* const args)
 {
+	std::cout << "Choose the matrix: ";
 	auto result = args->m_arr[choose_index()];
 	result.transpose();
 	if (args->assign) args->m_arr[args->index](result);
@@ -132,10 +133,11 @@ auto lib3::case6(Arguments* const args)
 		<< "1)\tOperation ++M\n"
 		<< "2)\tOperation M++\n"
 		<< "3)\tOperation --M\n"
-		<< "4)\tOperation M--\n";
+		<< "4)\tOperation M--\n"
+		<< "Operation: ";
 	const auto operation = get_value(1, 4, true);
 
-	cout << "Choose the matrix:\n";
+	cout << "Choose the matrix: ";
 	auto result = args->m_arr[choose_index()];
 
 	cout << "Result is:\n";
@@ -161,15 +163,17 @@ auto lib3::case7(Arguments* const args)
 	using std::cout;
 	cout << "Choose the type for operation +/-:\n"
 		<< "1)\tdouble\n"
-		<< "2)\tMatrix\n";
+		<< "2)\tMatrix\n"
+		<< "Type: ";
 	const auto type = get_value(1, 2, true);
 
 	cout << "Choose the kind of operation:\n"
 		<< "1)\tOperation +\n"
-		<< "2)\tOperation -\n";
+		<< "2)\tOperation -\n"
+		<< "Operation: ";
 	const auto operation = get_value(1, 2, true);
 
-	cout << (type == 2 ? "Choose the first matrix:\n" : "Choose the matrix:\n");
+	cout << (type == 2 ? "Choose the first matrix: " : "Choose the matrix: ");
 	const auto index1 = choose_index();
 	if (type == 1) case8_1(args, index1, operation);
 	else case8_2(args, index1, operation);
@@ -186,10 +190,11 @@ auto lib3::case8(const Arguments* const args)
 	cout << "Choose the kind of operation:\n"
 		<< "1)\tOperation >\n"
 		<< "2)\tOperation <\n"
-		<< "3)\tOperation ==\n";
+		<< "3)\tOperation ==\n"
+		<< "Operation: ";
 	const auto operation = get_value(1, 3, true);
 
-	cout << (type == 3 ? "Choose the first matrix:\n" : "Choose the matrix:\n");
+	cout << (type == 3 ? "Choose the first matrix:\n" : "Choose the matrix: ");
 	const auto index1 = choose_index();
 
 	using Options = bool(*[])(const Arguments*, unsigned int, int);
@@ -200,6 +205,7 @@ auto lib3::case8(const Arguments* const args)
 auto lib3::case9(const Arguments* const args)
 {
 	using std::cout;
+	cout << "Choose the matrix: ";
 	const auto index = choose_index();
 	cout << "Choose the new type:\n"
 		<< "1)\tbool\n"
@@ -210,30 +216,33 @@ auto lib3::case9(const Arguments* const args)
 	switch (get_value(1u, 5u, true))
 	{
 	case 1:
-		cout << static_cast<bool>(args->m_arr[index]);
+		cout << "The result is: " << static_cast<bool>(args->m_arr[index]) << "\n";
 		return;
 	case 2:
-		cout << static_cast<unsigned int>(args->m_arr[index]);
+		cout << "The result is: " << static_cast<unsigned int>(args->m_arr[index]) << "\n";
 		return;
 	case 3:
-		cout << static_cast<int>(args->m_arr[index]);
+		cout << "The result is: " << static_cast<int>(args->m_arr[index]) << "\n";
 		return;
 	case 4:
-		cout << static_cast<double>(args->m_arr[index]);
+		cout << "The result is: " << static_cast<double>(args->m_arr[index]) << "\n";
 		return;
 	default:
-		cout << static_cast<matrix::Size>(args->m_arr[index]);
+		cout << "The result is: " << static_cast<matrix::Size>(args->m_arr[index]) << "\n";
 		return;
 	}
 }
 auto lib3::case10(const Arguments* const args)
 {
+	using std::cout;
+	cout << "Choose the matrix: ";
 	const auto index = choose_index();
-	std::cout << "Enter the uint value: ";
-	std::cout << "Result is: " << args->m_arr[index][get_value(1u, args->m_arr[index].height(), true) - 1];
+	cout << "Enter the uint value: ";
+	cout << "Result is: " << args->m_arr[index][get_value(1u, args->m_arr[index].height(), true) - 1] << "\n";
 }
 auto lib3::case11(const Arguments* const args)
 {
+	std::cout << "Choose the matrix: ";
 	std::cout << args->m_arr[choose_index()];
 }
 
@@ -264,14 +273,14 @@ void lib3::main_menu(Arguments* args)
 
 		using Options = void(*[])(Arguments*);
 		using ConstOptions = void(*[])(const Arguments*);
-		constexpr Options option = { &case1, &case2, &case3, &case4, &case5, &case6, &case7 };
-		constexpr ConstOptions const_option = { &case8, &case9, &case10, &case11 };
+		constexpr Options options = { &case1, &case2, &case3, &case4, &case5, &case6, &case7 };
+		constexpr ConstOptions const_options = { &case8, &case9, &case10, &case11 };
 
 		const auto action = get_value(1, 13, true) - 1;
 
 		if (action == 11) return;
-		if (action < 7) option[action](args);
-		else const_option[action - 7];
+		if (action < 7) options[action](args);
+		else const_options[action - 7](args);
 
 		update_screen();
 	}
