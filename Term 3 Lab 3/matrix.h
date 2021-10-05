@@ -117,7 +117,6 @@ namespace matrix
 		static void push_temp(const Matrix&);
 	};
 
-
 	// Reverse all values and assign
 	Matrix& operator-- (Matrix&);
 	// Assign and reverse all values

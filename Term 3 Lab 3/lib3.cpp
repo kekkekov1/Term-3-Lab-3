@@ -1,5 +1,7 @@
 #include "lib3.h"
 
+#pragma region namespace lib3:: additional functions
+
 void lib3::update_screen()
 {
 	system("pause");  // NOLINT(concurrency-mt-unsafe)
@@ -36,6 +38,12 @@ unsigned int lib3::get_uint()
 	std::cout << "Enter the uint value: ";
 	return get_value(0u, UINT_MAX);
 }
+
+#pragma endregion
+
+#pragma region namespace lib3:: main_menu function and its cases
+
+#pragma region namespace lib3:: sub-cases
 
 void lib3::case7_1(Arguments* const args, const unsigned int index, const int operation)
 {
@@ -99,6 +107,10 @@ bool lib3::case8_3(const Arguments* const args, const unsigned int index, const 
 		return args->m_arr[index] == args->m_arr[index2];
 	}
 }
+
+#pragma endregion
+
+#pragma region namespace lib3:: cases
 
 void lib3::case1(Arguments* const args)
 {
@@ -221,6 +233,10 @@ void lib3::case7(Arguments* const args)
 	else case7_2(args, index1, operation);
 }
 
+#pragma endregion
+
+#pragma region namespace lib3:: const cases
+
 void lib3::case8(const Arguments* const args)
 {
 	using std::cout;
@@ -294,16 +310,16 @@ void lib3::case11(const Arguments* const args)
 	std::cout << args->m_arr[choose_index()];
 }
 
+#pragma endregion
+
 void lib3::main_menu(Arguments* args)
 {
 	using std::cout;
 	while (true)
 	{
 		for (auto i = 0u; i < kArraySize; i++)
-		{
-			if (!i) cout << "Matrix #" << i + 1 << "\n";
-			cout << args->m_arr[i] << "\n";
-		}
+			cout << "Matrix #" << i + 1 << "\n" << args->m_arr[i] << "\n";
+
 		cout << "No:\tReturn:\tOperation:\n"
 			<< "1)\t      :\t" << (args->assign ? "Disable assignment (current matrix used for assignment is " : "M = last result (enable assignment")
 			<< (args->assign ? static_cast<char>('1' + args->index) : '\0') << ")\n"
@@ -336,3 +352,5 @@ void lib3::main_menu(Arguments* args)
 		update_screen();
 	}
 }
+
+#pragma endregion

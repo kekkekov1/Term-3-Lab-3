@@ -64,12 +64,12 @@ std::ostream& matrix::operator<<(const std::ostream&, const Matrix& matrix)
 	using std::cout;
 	if (!matrix.area()) return cout << "Matrix is empty.\n";
 	for (auto i = 0u; i < matrix.height_; i++)
-		cout << "| " << matrix[i] << " |\n";
+		cout << "|   " << matrix[i] << "\t|\n";
 	return cout;
 }
 std::ostream& matrix::operator<<(const std::ostream&, const Size& size)
 {
-	return std::cout << "Height: " << size.height_ << "\tWidth: " << size.width_;
+	return std::cout << "Height: " << size.height_ << "\tWidth: " << size.width_ << "Area: " << size.height_ * size.width_;
 }
 
 #pragma endregion
@@ -98,7 +98,7 @@ std::string matrix::Matrix::operator[] (const unsigned int i) const
 		for (auto k = 0u; k < width_; k++)
 		{
 			string += std::to_string(representation_[i][k]);
-			if (k != width_ - 1) string += " ";
+			if (k != width_ - 1) string += "   ";
 		}
 	return string;
 }
