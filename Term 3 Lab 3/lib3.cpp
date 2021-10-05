@@ -37,7 +37,7 @@ unsigned int lib3::get_uint()
 	return get_value(0u, UINT_MAX);
 }
 
-auto lib3::case7_1(Arguments* const args, const unsigned int index, const int operation)
+void lib3::case7_1(Arguments* const args, const unsigned int index, const int operation)
 {
 	if (operation == 1)	std::cout << "This operation will calculate the pow of each element in the matrix. The pow you choose (how many times).\n";
 	else std::cout << "This operation will calculate the root of each element in the matrix. The pow you choose (how many times).\n";
@@ -48,7 +48,7 @@ auto lib3::case7_1(Arguments* const args, const unsigned int index, const int op
 	if (args->assign) args->m_arr[args->index](result);
 	std::cout << "Result is:\n" << result;
 }
-auto lib3::case7_2(const Arguments* const args, const unsigned int index, const int operation)
+void lib3::case7_2(const Arguments* const args, const unsigned int index, const int operation)
 {
 	if (operation == 1)	std::cout << "This operation will calculate the quantity of all elements in two matrices.\n";
 	else std::cout << "This operation will calculate arithmetical difference between the quantity of all elements in two matrices.\n";
@@ -56,7 +56,7 @@ auto lib3::case7_2(const Arguments* const args, const unsigned int index, const 
 	if (operation == 1) std::cout << "Result is: " << args->m_arr[index] + args->m_arr[index2];
 	else std::cout << "Result is: " << args->m_arr[index] - args->m_arr[index2] << "\n";
 }
-auto lib3::case8_1(const Arguments* const args, const unsigned int index, const int operation)
+bool lib3::case8_1(const Arguments* const args, const unsigned int index, const int operation)
 {
 	std::cout << "This operation will compare the sum of all elements with the value you provide below.\n";
 	switch (operation)
@@ -69,7 +69,7 @@ auto lib3::case8_1(const Arguments* const args, const unsigned int index, const 
 		return args->m_arr[index] == get_int();
 	}
 }
-auto lib3::case8_2(const Arguments* const args, const unsigned int index, const int operation)
+bool lib3::case8_2(const Arguments* const args, const unsigned int index, const int operation)
 {
 	std::cout << "This operation will compare the average value of all elements with the value you provide below.\n";
 	switch (operation)
@@ -83,7 +83,7 @@ auto lib3::case8_2(const Arguments* const args, const unsigned int index, const 
 	}
 
 }
-auto lib3::case8_3(const Arguments* const args, const unsigned int index, const int operation)
+bool lib3::case8_3(const Arguments* const args, const unsigned int index, const int operation)
 {
 
 	std::cout << "This operation will compare the quantity of all elements in two matrices.\n";
@@ -100,7 +100,7 @@ auto lib3::case8_3(const Arguments* const args, const unsigned int index, const 
 	}
 }
 
-auto lib3::case1(Arguments* const args)
+void lib3::case1(Arguments* const args)
 {
 	using std::cout;
 	cout << "This operation will configure the result assignment, so any operation result with the type Matrix will be placed where you choose.\n";
@@ -108,7 +108,7 @@ auto lib3::case1(Arguments* const args)
 	std::cout << "Choose the matrix for assignment: ";
 	if (args->assign) args->index = choose_index();
 }
-auto lib3::case2(Arguments* const args)
+void lib3::case2(Arguments* const args)
 {
 	using std::cout;
 	cout << "This operation will initialize the matrix with the values you you choose.\n";
@@ -135,7 +135,7 @@ auto lib3::case2(Arguments* const args)
 	if (args->assign) args->m_arr[args->index](result);
 	cout << "Result is:\n" << result;
 }
-auto lib3::case3(Arguments* const args)
+void lib3::case3(Arguments* const args)
 {
 	using std::cout;
 	cout << "This operation will create E-Matrix of the size you choose.\n";
@@ -144,7 +144,7 @@ auto lib3::case3(Arguments* const args)
 	if (args->assign) args->m_arr[args->index](result);
 	cout << "Result is:\n" << result;
 }
-auto lib3::case4(Arguments* const args)
+void lib3::case4(Arguments* const args)
 {
 	using std::cout;
 	cout << "This operation will transpose the matrix you choose.\n";
@@ -154,7 +154,7 @@ auto lib3::case4(Arguments* const args)
 	if (args->assign) args->m_arr[args->index](result);
 	cout << "Result is:\n" << result;
 }
-auto lib3::case5(Arguments* const args)
+void lib3::case5(Arguments* const args)
 {
 	using std::cout;
 	cout << "This operation will create the square matrix of the size you choose, filled with the value you choose.\n";
@@ -165,7 +165,7 @@ auto lib3::case5(Arguments* const args)
 	if (args->assign) args->m_arr[args->index](result);
 	cout << "Result is:\n" << result;
 }
-auto lib3::case6(Arguments* const args)
+void lib3::case6(Arguments* const args)
 {
 	using std::cout;
 	cout << "Choose the kind of operation:\n"
@@ -200,7 +200,7 @@ auto lib3::case6(Arguments* const args)
 	}
 	if (args->assign) args->m_arr[args->index](result);
 }
-auto lib3::case7(Arguments* const args)
+void lib3::case7(Arguments* const args)
 {
 	using std::cout;
 	cout << "Choose the type for operation +/-:\n"
@@ -221,7 +221,7 @@ auto lib3::case7(Arguments* const args)
 	else case7_2(args, index1, operation);
 }
 
-auto lib3::case8(const Arguments* const args)
+void lib3::case8(const Arguments* const args)
 {
 	using std::cout;
 	cout << "Choose the type for operation >/</==:\n"
@@ -246,7 +246,7 @@ auto lib3::case8(const Arguments* const args)
 	const auto result = option[type - 1](args, index1, operation);
 	std::cout << "Result is: " << result << "\n";
 }
-auto lib3::case9(const Arguments* const args)
+void lib3::case9(const Arguments* const args)
 {
 	using std::cout;
 	std::cout << "This operation will convert the matrix you choose into the type you choose.\n";
@@ -277,7 +277,7 @@ auto lib3::case9(const Arguments* const args)
 		return;
 	}
 }
-auto lib3::case10(const Arguments* const args)
+void lib3::case10(const Arguments* const args)
 {
 	std::cout << "This operation will print the chosen line of the matrix you choose!\n";
 	using std::cout;
@@ -287,7 +287,7 @@ auto lib3::case10(const Arguments* const args)
 	const auto uint = get_value(1u, args->m_arr[index].height(), true) - 1;
 	cout << "Result is: " << args->m_arr[index][uint] << "\n";
 }
-auto lib3::case11(const Arguments* const args)
+void lib3::case11(const Arguments* const args)
 {
 	std::cout << "This operation will print the matrix you choose!\n";
 	std::cout << "Choose the matrix: ";
