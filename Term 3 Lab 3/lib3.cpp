@@ -56,7 +56,6 @@ auto lib3::case7_2(const Arguments* const args, const unsigned int index, const 
 	if (operation == 1) std::cout << "Result is: " << args->m_arr[index] + args->m_arr[index2];
 	else std::cout << "Result is: " << args->m_arr[index] - args->m_arr[index2] << "\n";
 }
-
 auto lib3::case8_1(const Arguments* const args, const unsigned int index, const int operation)
 {
 	std::cout << "This operation will compare the sum of all elements with the value you provide below.\n";
@@ -112,8 +111,29 @@ auto lib3::case1(Arguments* const args)
 auto lib3::case2(Arguments* const args)
 {
 	using std::cout;
-	cout << "This operation will ...\n";
+	cout << "This operation will initialize the matrix with the values you you choose.\n";
+	cout << "Enter the matrix's height: ";
+	const unsigned height = get_value(0u, UINT_MAX);
+	cout << "Enter the matrix's width: ";
+	const unsigned width = get_value(0u, UINT_MAX);
+	const auto int_array = new int*[height];
+	for (auto i = 0u; i < height; i++)
+	{
+		int_array[i] = new int[width];
+		for (auto j = 0u; j < width; j++)
+		{
+			cout << "Enter the element[" << i + 1 << "][" << j + 1 << "]: ";
+			int_array[i][j] = get_value(INT_MIN, INT_MAX, true);
+		}
+	}
+	const auto result = matrix::Matrix(height, width, int_array);
 
+	for (auto i = 0u; i < height; i++)
+		delete[] int_array[i];
+	delete[] int_array;
+
+	if (args->assign) args->m_arr[args->index](result);
+	cout << "Result is:\n" << result;
 }
 auto lib3::case3(Arguments* const args)
 {
@@ -200,6 +220,7 @@ auto lib3::case7(Arguments* const args)
 	if (type == 1) case7_1(args, index1, operation);
 	else case7_2(args, index1, operation);
 }
+
 auto lib3::case8(const Arguments* const args)
 {
 	using std::cout;
@@ -278,9 +299,11 @@ void lib3::main_menu(Arguments* args)
 	using std::cout;
 	while (true)
 	{
-		for (auto& i : args->m_arr)
-			cout << i << "\n";
-
+		for (auto i = 0u; i < kArraySize; i++)
+		{
+			if (!i) cout << "Matrix #" << i + 1 << "\n";
+			cout << args->m_arr[i] << "\n";
+		}
 		cout << "No:\tReturn:\tOperation:\n"
 			<< "1)\t      :\t" << (args->assign ? "Disable assignment (current matrix used for assignment is " : "M = last result (enable assignment")
 			<< (args->assign ? static_cast<char>('1' + args->index) : '\0') << ")\n"
@@ -295,7 +318,6 @@ void lib3::main_menu(Arguments* args)
 			<< "10)\tString:\tM[ uint ]\n"
 			<< "11)\t      :\tPrint M, aka std::cout << M\n"
 			<< "12)\t      :\tQuit\n";
-
 		cout << "Choose the action number: ";
 
 		using Options = void(*[])(Arguments*);
